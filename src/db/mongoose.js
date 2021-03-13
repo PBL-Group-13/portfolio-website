@@ -1,6 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
+console.log(process.env);
 mongoose
-  .connect("mongodb://localhost:27017/pbl", {
+  .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
