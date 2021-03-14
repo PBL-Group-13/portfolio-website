@@ -3,43 +3,48 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
 //import bcryptjs for hashing the password
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: false,
-    default: "anonymous",
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true,
-    lowercase: true,
-    minlength: 7,
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    //minlength:6 //This can also be used as opposed to validate
-    validate(value) {
-      if (value.length <= 5) {
-        throw new Error("Password should be atleast 6 characters long");
-      }
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: false,
+      default: "anonymous",
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      lowercase: true,
+      minlength: 7,
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      //minlength:6 //This can also be used as opposed to validate
+      validate(value) {
+        if (value.length <= 5) {
+          throw new Error("Password should be atleast 6 characters long");
+        }
+      },
     },
   },
-});
+  {
+    toJSON: {
+      transform: (doc, ret) => {
+        ret.id = doc._id;
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
+  }
+);
 
-//return public data of the user (object/instance)
-userSchema.methods.toJSON = function () {
-  const user = this;
-  const userObject = user.toObject();
-  delete userObject.password;
-  return userObject;
-};
 //(instance) method accessable by our individual object(user) of Model(User)
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
