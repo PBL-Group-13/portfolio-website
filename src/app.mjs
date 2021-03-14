@@ -2,7 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
-import { helloWorldRoute } from "./routes/index.mjs";
+import { errorHandler } from "./middleware/errorHandler.mjs";
+import { UserRouter } from "./routes/index.mjs";
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/", helloWorldRoute);
+app.use("/api/", UserRouter);
+
+app.use(errorHandler);
 
 export { app };
