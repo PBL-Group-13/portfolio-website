@@ -28,7 +28,7 @@ export default function Login() {
 
                   </div>
                   <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                    <div className="text-gray-700 text-center mb-0 font-bold">
+                    <div className="font-sans subpixel-antialiased text-gray-700 text-center mb-0 font-bold">
                       <big> SIGN IN</big>
                     </div>
                     <div className="rounded-t mb-0 px-2 py-1">
