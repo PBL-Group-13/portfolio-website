@@ -50,7 +50,7 @@ export const createPortfolioController = asyncHandler(async (req, res) => {
       projects: req.body.projects,
     };
     const portfolio = await new Portfolio(portfolioConfig);
-    portfolioConfig.save();
+    await portfolioConfig.save();
     res
       .type("application/json")
       .send({ message: "Created Successfully", portfolio });
