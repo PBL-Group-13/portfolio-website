@@ -5,7 +5,16 @@ import { User } from "../models/index.mjs";
  */
 export const signUpController = asyncHandler(async (req, res, next) => {
   try {
-    const { email, password, name } = req.body;
+    const {
+      email,
+      password,
+      firstname,
+      lastname,
+      birthdate,
+      location,
+      phoneNumber,
+      description,
+    } = req.body;
 
     const isExistingUser = await User.findOne({ email });
 
@@ -16,10 +25,15 @@ export const signUpController = asyncHandler(async (req, res, next) => {
     const user = await new User({
       email,
       password,
-      name,
+      firstname,
+      lastname,
+      birthdate,
+      location,
+      phoneNumber,
+      description,
     });
     const token = await user.generateAuthToken();
-    res.type("application/json").send({ user, token });
+    res.status(201).type("application/json").send({ user, token });
   } catch (e) {
     next(e);
   }
@@ -29,7 +43,6 @@ export const signUpController = asyncHandler(async (req, res, next) => {
  * Sign In Controller
  */
 export const signInController = asyncHandler(async (req, res) => {
-  console.log(req.body);
   try {
     const user = await User.findByCredentials(
       req.body.email,
@@ -38,7 +51,7 @@ export const signInController = asyncHandler(async (req, res) => {
     const token = await user.generateAuthToken();
     //when send is called ,the arguements are stringified using JSON.stringify()
 
-    res.type("application/json").send({ user, token });
+    res.status(200).type("application/json").send({ user, token });
   } catch (e) {
     res
       .type("application/json")
