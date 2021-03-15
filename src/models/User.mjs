@@ -7,7 +7,13 @@ import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
+      type: String,
+      required: false,
+      default: "anonymous",
+      trim: true,
+    },
+    lastname: {
       type: String,
       required: false,
       default: "anonymous",
@@ -19,18 +25,32 @@ const userSchema = new mongoose.Schema(
       trim: true,
       unique: true,
       lowercase: true,
-      minlength: 7,
     },
     password: {
       type: String,
       required: true,
       trim: true,
-      //minlength:6 //This can also be used as opposed to validate
-      validate(value) {
-        if (value.length <= 5) {
-          throw new Error("Password should be atleast 6 characters long");
-        }
-      },
+      minlength: 6,
+    },
+    birthdate: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    location: {
+      type: String,
+      required: false,
+      default: "N/A",
+    },
+    phoneNumber: {
+      type: String,
+      minlength: 10,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: false,
+      default: "N/A",
     },
   },
   {
@@ -48,7 +68,7 @@ const userSchema = new mongoose.Schema(
 //(instance) method accessable by our individual object(user) of Model(User)
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user.id.toString() }, "LolThisIsNoSecret");
+  const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET);
   await user.save();
   return token;
 };

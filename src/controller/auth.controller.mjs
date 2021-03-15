@@ -29,7 +29,6 @@ export const signUpController = asyncHandler(async (req, res, next) => {
  * Sign In Controller
  */
 export const signInController = asyncHandler(async (req, res) => {
-  console.log(req.body);
   try {
     const user = await User.findByCredentials(
       req.body.email,
