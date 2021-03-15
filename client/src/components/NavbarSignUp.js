@@ -118,9 +118,9 @@ export default function Navbar(props) {
                   }
                   type="button"
                   style={{ transition: "all .15s ease" }}
-                  onClick={() => history.push('/signup')}
+                  onClick={() => history.push('/signin')}
                 >
-                  <i className=""></i> SignUp
+                  <i className=""></i> Sign In
                 </button>
               </li>
             </ul>

@@ -6,12 +6,15 @@ import './index.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import Login from "../src/views/Login.js";
+import SignUp from "../src/views/SignUp.js";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/login" component={Login} />
-      <Redirect from="/" to="/login" />
+      <Route path="/signin" component={Login} />
+      {/* <Redirect from="/" to="/signin" /> */}
+      <Route path="/signup" component={SignUp} />
+      
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

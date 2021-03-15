@@ -2,10 +2,14 @@ import React from "react";
 
 import Navbar from "../components/Navbar.js";
 import FooterSmall from "../components/FooterSmall.js";
-
+import { useHistory } from 'react-router-dom';
 import backgroundimg from "../assets/img/register_bg_2.png"
 
+
+
+
 export default function Login() {
+  const history = useHistory();
   return (
     <>
       <Navbar transparent />
@@ -28,11 +32,13 @@ export default function Login() {
 
                   </div>
                   <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                    <div className="font-sans subpixel-antialiased text-gray-700 text-center mb-0 font-bold">
-                      <big> SIGN IN</big>
+                    <div className=" text-left">
+                      <h1 className="text-3xl font-bold text-gray-800 tracking-tight mt-1"> Sign In</h1>
+                      <h2 className="text-lg font-medium text-gray-800 tracking-tight">New here..?  <a href="" className="hover:underline" onClick={() => history.push('/signup')}>Create an account.</a> </h2>
+                      <hr className=" mt-2 mb-3 border-b-1 border-gray-500" />
                     </div>
-                    <div className="rounded-t mb-0 px-2 py-1">
-                    <hr className="mb-6 border-b-1 border-gray-500" />
+                    <div className="rounded-t mb-0 px-2 py-2">
+                    
                   </div>
                     <form>
                       <div className="relative w-full mb-3">
