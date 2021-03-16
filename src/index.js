@@ -1,5 +1,5 @@
-import { app } from "./app.mjs";
-import { connectDB } from "./db/mongoose.mjs";
+import { app } from "./app.js";
+import { connectDB } from "./db/mongoose.js";
 
 const port = process.env.PORT || 9000;
 
