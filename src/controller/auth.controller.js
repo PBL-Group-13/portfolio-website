@@ -22,13 +22,11 @@ export const signUpController = asyncHandler(async (req, res, next) => {
 
     if (isExistingUser) {
       res.status(400).send({
-        errors: [
-          { status: "error", errors: [{ message: "User already exits!" }] },
-        ],
+        status: "error",
+        errors: [{ message: "User already exist!" }],
       });
       return;
     }
-
     const user = await User.create({
       email,
       password,
