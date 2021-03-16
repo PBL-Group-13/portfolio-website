@@ -1,10 +1,10 @@
 //import mongoose and validator modules
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-
+import crypto from "crypto";
 //import bcryptjs for hashing the password
 import bcrypt from "bcrypt";
-
+import { Portfolio } from "./Portfolio.js";
 const userSchema = new mongoose.Schema(
   {
     firstname: {
@@ -33,24 +33,27 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
     },
     birthdate: {
-      type: String,
-      required: true,
-      trim: true,
+      type: Date,
     },
     location: {
       type: String,
       required: false,
-      default: "N/A",
     },
     phoneNumber: {
-      type: String,
-      minlength: 10,
+      type: Number,
       required: false,
     },
     description: {
       type: String,
       required: false,
-      default: "N/A",
+    },
+    slug: {
+      type: String,
+      required: true,
+    },
+    portfolio: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Portfolio",
     },
   },
   {
@@ -66,10 +69,9 @@ const userSchema = new mongoose.Schema(
 );
 
 //(instance) method accessable by our individual object(user) of Model(User)
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = function () {
   const user = this;
   const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET);
-  await user.save();
   return token;
 };
 
@@ -77,11 +79,11 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error("Unable to login");
+    throw new Error("Invalid email or password");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error("Unable to login");
+    throw new Error("Invalid email or password");
   }
   return user;
 };
@@ -94,7 +96,31 @@ userSchema.pre("save", async function (next) {
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
+
+  if (user.isModified("slug")) {
+    if (user.portfolio) {
+      const portfolio = await Portfolio.findById(user.portfolio);
+      if (portfolio) {
+        portfolio.slug = user.slug;
+        try {
+          await portfolio.save();
+        } catch (e) {
+          throw new Error("Something went wrong while saving portfolio!");
+        }
+      }
+    }
+  }
   //signifies end ofthe middle process just before save is executed
+  next();
+});
+
+userSchema.pre("validate", function (next) {
+  if (!this.slug) {
+    this.slug = `${this.firstname}-${this.lastname}-${crypto
+      .randomBytes(8)
+      .toString("hex")
+      .toLowerCase()}`;
+  }
   next();
 });
 

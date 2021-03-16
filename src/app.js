@@ -2,8 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
-import { errorHandler } from "./middleware/errorHandler.mjs";
-import { UserRouter } from "./routes/index.mjs";
+import { errorHandler } from "./middleware/errorHandler.js";
+import { PortfolioRouter, UserRouter } from "./routes/index.js";
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/", UserRouter);
+app.use("/api/portfolios", PortfolioRouter);
 
 app.use(errorHandler);
 

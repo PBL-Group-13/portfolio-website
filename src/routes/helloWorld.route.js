@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { helloWorldController } from "../controller/index.mjs";
+import { helloWorldController } from "../controller/index.js";
 const route = Router();
 
 route.get("/", helloWorldController);
