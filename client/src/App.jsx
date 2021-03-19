@@ -8,6 +8,7 @@ import Login from "./section/LogIn";
 import SignUp from "./section/SignUp";
 import { Home } from "./section/Home";
 import { useFetch } from "./lib/hooks";
+import { CreatePortfolio } from "./section/Portfolio/index";
 
 const intialViewer = {
   firstname: null,
@@ -66,6 +67,11 @@ const App = () => {
           </Route>
           <Route path="/signup" exact>
             <SignUp
+              setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
+            />
+          </Route>
+          <Route path="/createportfolio" exact>
+            <CreatePortfolio
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
             />
           </Route>

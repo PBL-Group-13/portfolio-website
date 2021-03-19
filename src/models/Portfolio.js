@@ -82,7 +82,7 @@ const portfolioSchema = new mongoose.Schema(
       type: [experienceSchema],
       default: [],
     },
-    education: {
+    experience: {
       type: [experienceSchema],
       default: [],
     },
