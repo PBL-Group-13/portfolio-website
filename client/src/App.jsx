@@ -9,6 +9,8 @@ import SignUp from "./section/SignUp";
 import { Home } from "./section/Home";
 import { useFetch } from "./lib/hooks";
 import { CreatePortfolio } from "./section/Portfolio/index";
+import { PrivateRoute } from "./lib/components/PrivateRoute";
+import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
 
 const intialViewer = {
   firstname: null,
@@ -70,11 +72,25 @@ const App = () => {
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
             />
           </Route>
-          <Route path="/createportfolio" exact>
-            <CreatePortfolio
-              setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
-            />
-          </Route>
+          <PrivateRoute
+            path="/portfolio/create"
+            exact
+            viewer={viewer}
+            component={CreatePortfolio}
+          />
+          <Route
+            path="/portfolio/:id"
+            exact
+            component={(props) => (
+              <ViewPortfolio {...props} baseUrl="portfolio" />
+            )}
+          />
+          <Route
+            path="/portfolio/:id/*"
+            component={(props) => (
+              <ViewPortfolio {...props} baseUrl="portfolio" />
+            )}
+          />
         </Switch>
       </main>
       <FooterSmall />

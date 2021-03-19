@@ -47,17 +47,28 @@ const CreatePortfolio = (props) => {
     console.log(formData);
   };
   return (
-    <>
+    <div className="max-w-xl mx-auto">
       <form onSubmit={handleSubmit}>
-        <input
-          value={formData.slug}
-          onChange={handleChange}
-          type="text"
-          name="slug"
-          placeholder="slug"
-        />
+        <h1 className="text-3xl font-bold text-gray-300 my-8">Portfolio</h1>
+        <label
+          htmlFor="slug"
+          className="block uppercase text-gray-300 text-xs font-bold mb-2"
+        >
+          Slug
+          <input
+            value={formData.slug}
+            onChange={handleChange}
+            type="text"
+            name="slug"
+            minLength={6}
+            maxLength={100}
+            required
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
+            placeholder="slug"
+          />
+        </label>
         <div>
-          {/* Social Links */}
+          <h1 className="text-2xl font-bold text-gray-300 my-8">Social Link</h1>
           {Object.keys(initPortfolioSchema.socialLinks).map(
             (socialLink, index) => {
               return (
@@ -71,17 +82,25 @@ const CreatePortfolio = (props) => {
             }
           )}
         </div>
-        <textarea
-          name="about"
-          value={formData.about}
-          onChange={handleChange}
-          placeholder="about me"
-        />
         <div>
+          <h1 className="text-2xl font-bold text-gray-300 my-8">About You</h1>
+          <textarea
+            name="about"
+            value={formData.about}
+            onChange={handleChange}
+            placeholder="about me"
+            required
+            minLength={3}
+            maxLength={1000}
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2 h-40"
+          />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-300 my-8">Resume</h1>
           <button
             name="skills"
             onClick={handleClick}
-            style={{ background: "white" }}
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           >
             Add Skills
           </button>
@@ -101,7 +120,7 @@ const CreatePortfolio = (props) => {
           <button
             name="education"
             onClick={handleClick}
-            style={{ background: "white" }}
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           >
             Add Education
           </button>
@@ -124,7 +143,7 @@ const CreatePortfolio = (props) => {
           <button
             name="experience"
             onClick={handleClick}
-            style={{ background: "white" }}
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           >
             Add Experience
           </button>
@@ -144,7 +163,7 @@ const CreatePortfolio = (props) => {
           <button
             name="projects"
             onClick={handleClick}
-            style={{ background: "white" }}
+            className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           >
             Add Project
           </button>
@@ -160,11 +179,14 @@ const CreatePortfolio = (props) => {
             );
           })}
         </div>
-        <button type="submit" style={{ background: "white" }}>
+        <button
+          type="submit"
+          className="px-3 py-3 my-8 placeholder-gray-500 text-gray-900 bg-gray-300 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
+        >
           Submit
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
