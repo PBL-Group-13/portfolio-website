@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { Portfolio } from "../models/index.js";
+import { Portfolio, ContactForm, User } from "../models/index.js";
 
 export const getPortfoliosController = asyncHandler(async (req, res, next) => {
   try {
@@ -80,14 +80,8 @@ export const getPortfolioByUserController = asyncHandler(
 export const createPortfolioController = asyncHandler(
   async (req, res, next) => {
     try {
-      const {
-        socialLinks,
-        about,
-        skills,
-        education,
-        experience,
-        projects,
-      } = req.body;
+      const { socialLinks, about, skills, education, experience, projects } =
+        req.body;
       const prevPortfolio = await Portfolio.findOne({ user: req.user.id });
       if (prevPortfolio) {
         res
@@ -190,6 +184,52 @@ export const deletePortfolioController = asyncHandler(
       }
       const deleteObj = await portfolio.remove();
       res.type("application/json").send({ status: "success", data: deleteObj });
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+export const submitContactFormController = asyncHandler(
+  async (req, res, next) => {
+    try {
+      const user = await User.findOne({ email: req.body.portfolioEmail });
+      if (!user) {
+        throw "User doesn't Exit !!";
+      }
+      const contactFormTest = await ContactForm.findOne({
+        email: req.body.email,
+        user: user._id,
+      });
+      if (contactFormTest) {
+        throw "Already Contacted";
+      }
+      const contactForm = await new ContactForm({
+        user: user._id,
+        name: req.body.name,
+        email: req.body.email,
+        message: req.body.message,
+      }).populate("user");
+      res
+        .type("application/json")
+        .send({ status: "success", data: contactForm });
+      await contactForm.save();
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+export const getContactRequestsController = asyncHandler(
+  async (req, res, next) => {
+    try {
+      const contactForms = await ContactForm.find({
+        user: req.user.id,
+      }).populate("user");
+      console.log(contactForms);
+      res
+        .type("application/json")
+        .send({ status: "success", data: contactForms });
     } catch (e) {
       next(e);
     }
