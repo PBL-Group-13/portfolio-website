@@ -200,18 +200,35 @@ export const submitContactFormController = asyncHandler(
         user: user._id,
       });
       if (contactFormTest) {
-        throw "Already Contacted";
+        console.log("UpdatedAt : ", contactFormTest.updatedAt);
+        const currentDate = new Date();
+        const diffTime =
+          Math.abs(currentDate - contactFormTest.updatedAt) / 60000;
+        console.log(diffTime);
+        if (diffTime > 60) {
+          contactFormTest.message = req.body.message;
+          contactFormTest.name = req.body.name;
+          await contactFormTest.save();
+          res
+            .type("application/json")
+            .send({ status: "success", data: contactFormTest });
+          await contactFormTest.save();
+          return;
+        } else {
+          throw "Cannot contact twice in 1 hour";
+        }
+      } else {
+        const contactForm = await new ContactForm({
+          user: user._id,
+          name: req.body.name,
+          email: req.body.email,
+          message: req.body.message,
+        }).populate("user");
+        res
+          .type("application/json")
+          .send({ status: "success", data: contactForm });
+        await contactForm.save();
       }
-      const contactForm = await new ContactForm({
-        user: user._id,
-        name: req.body.name,
-        email: req.body.email,
-        message: req.body.message,
-      }).populate("user");
-      res
-        .type("application/json")
-        .send({ status: "success", data: contactForm });
-      await contactForm.save();
     } catch (e) {
       next(e);
     }
