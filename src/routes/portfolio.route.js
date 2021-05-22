@@ -23,8 +23,8 @@ router.get("/", getPortfoliosController);
 
 // user portfolio routes
 router.get("/me", userAuthentication, getPortfolioByUserController);
-router.get("/:slug", getPortfolioBySlugController);
 router.get("/id/:portfolioId", getPortfolioByIdController);
+router.get("/:slug", getPortfolioBySlugController);
 
 router.post("/", userAuthentication, createPortfolioController);
 router.patch("/:id", userAuthentication, updatePortfolioController);

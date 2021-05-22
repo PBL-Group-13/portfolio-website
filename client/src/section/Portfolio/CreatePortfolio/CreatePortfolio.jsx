@@ -30,6 +30,14 @@ const CreatePortfolio = (props) => {
       console.log(data);
     },
   });
+  const handleRemove = (e) => {
+    const name = e.target.name;
+    if (counter[name] > 0) {
+      setCounter({ ...counter, [name]: counter[name] - 1 });
+      const tempFormData = formData;
+      tempFormData[name].pop();
+    }
+  };
   const handleClick = (e) => {
     const name = e.target.name;
     if (counter[name] < 5) {
@@ -45,6 +53,12 @@ const CreatePortfolio = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    createPortfolio({
+      url: "/portfolios",
+      data: formData,
+      method: "post",
+    });
+    console.log(data);
   };
   return (
     <div className="max-w-xl mx-auto">
@@ -104,6 +118,15 @@ const CreatePortfolio = (props) => {
           >
             Add Skills
           </button>
+          {counter.skills !== 0 && (
+            <button
+              name="skills"
+              onClick={handleRemove}
+              className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-red-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
+            >
+              Remove Skill
+            </button>
+          )}
           {/* top 5 skills */}
           {formData.skills.map((skill, index) => {
             return (
@@ -124,6 +147,15 @@ const CreatePortfolio = (props) => {
           >
             Add Education
           </button>
+          {counter.education !== 0 && (
+            <button
+              name="education"
+              onClick={handleRemove}
+              className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-red-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
+            >
+              Remove Education
+            </button>
+          )}
           {/* education */}
           {formData.education.map((edu, index) => {
             return (
@@ -147,6 +179,15 @@ const CreatePortfolio = (props) => {
           >
             Add Experience
           </button>
+          {counter.experience !== 0 && (
+            <button
+              name="experience"
+              onClick={handleRemove}
+              className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-red-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
+            >
+              Remove Experience
+            </button>
+          )}
           {formData.experience.map((exp, index) => {
             return (
               <ComplexInputField
@@ -167,6 +208,15 @@ const CreatePortfolio = (props) => {
           >
             Add Project
           </button>
+          {counter.projects !== 0 && (
+            <button
+              name="projects"
+              onClick={handleRemove}
+              className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-red-800 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
+            >
+              Remove Project
+            </button>
+          )}
           {formData.projects.map((proj, index) => {
             return (
               <ProjectInputField
@@ -183,7 +233,7 @@ const CreatePortfolio = (props) => {
           type="submit"
           className="px-3 py-3 my-8 placeholder-gray-500 text-gray-900 bg-gray-300 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
         >
-          Submit
+          Create
         </button>
       </form>
     </div>

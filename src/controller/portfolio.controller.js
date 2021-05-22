@@ -116,7 +116,6 @@ export const updatePortfolioController = asyncHandler(
   async (req, res, next) => {
     try {
       const updates = Object.keys(req.body);
-
       const allowedUpdates = [
         "socialLinks",
         "about",
@@ -128,7 +127,6 @@ export const updatePortfolioController = asyncHandler(
       const isValidOperation = updates.every((update) =>
         allowedUpdates.includes(update)
       );
-
       if (!isValidOperation) {
         return res
           .status(400)
@@ -225,8 +223,7 @@ export const getContactRequestsController = asyncHandler(
     try {
       const contactForms = await ContactForm.find({
         user: req.user.id,
-      }).populate("user");
-      console.log(contactForms);
+      });
       res
         .type("application/json")
         .send({ status: "success", data: contactForms });
