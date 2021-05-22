@@ -11,6 +11,7 @@ import { useFetch } from "./lib/hooks";
 import { CreatePortfolio } from "./section/Portfolio/index";
 import { PrivateRoute } from "./lib/components/PrivateRoute";
 import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
+import { UpdatePortfolio } from "./section/Portfolio/UpdatePortfolio";
 
 const intialViewer = {
   firstname: null,
@@ -24,8 +25,7 @@ const intialViewer = {
 
 const App = () => {
   const [viewer, setViewer] = React.useState(intialViewer);
-
-  const [_who, _] = useFetch({
+  const [_who, { loading }] = useFetch({
     onSuccess: (data) => {
       setViewer({ ...data, didRequest: true });
     },
@@ -38,8 +38,9 @@ const App = () => {
   React.useEffect(() => {
     who.current({ url: "/who", method: "get" });
   }, []);
-
-  console.log({ viewer });
+  if (loading) {
+    return <h1>Loading....</h1>;
+  }
 
   return (
     <BrowserRouter>
@@ -77,6 +78,12 @@ const App = () => {
             exact
             viewer={viewer}
             component={CreatePortfolio}
+          />
+          <PrivateRoute
+            path="/me"
+            component={UpdatePortfolio}
+            exact
+            viewer={viewer}
           />
           <Route
             path="/portfolio/:id"

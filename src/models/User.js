@@ -50,6 +50,8 @@ const userSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
+      lowercase: true,
+      unique: true,
     },
     portfolio: {
       type: mongoose.Schema.Types.ObjectId,
