@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Login from "./section/LogIn";
 import SignUp from "./section/SignUp";
+import {MyContacts}  from "./section/Contacts";
 import { Home } from "./section/Home";
 import { useFetch } from "./lib/hooks";
 import { CreatePortfolio } from "./section/Portfolio/index";
@@ -59,7 +60,7 @@ const App = () => {
         draggable
         pauseOnHover
       />
-      <main className="bg-gray-900 pt-12 min-h-screen">
+      <main className="bg-gray-900 pt-12 min-h-screen max-h-screen ">
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/signin" exact>
@@ -72,6 +73,12 @@ const App = () => {
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
             />
           </Route>
+          <Route path="/mycontacts" exact>
+            <MyContacts
+              setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
+            />
+          </Route>
+
           <PrivateRoute
             path="/portfolio/create"
             exact
