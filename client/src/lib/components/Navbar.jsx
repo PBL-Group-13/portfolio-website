@@ -131,7 +131,7 @@ export default function Navbar(props) {
                       style={{ transition: "all .15s ease" }}
                       onClick={() => history.push("/me")}
                     >
-                      Hi, {props.viewer?.firstname || "User"}
+                      Hi, {props.viewer?.firstName || "User"}
                     </button>
                   </li>
                   <li className="flex items-center">

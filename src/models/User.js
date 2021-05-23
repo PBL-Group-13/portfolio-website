@@ -118,7 +118,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.pre("validate", function (next) {
   if (!this.slug) {
-    this.slug = `${this.firstname}-${this.lastname}-${crypto
+    this.slug = `${this.firstName}-${this.lastName}-${crypto
       .randomBytes(8)
       .toString("hex")
       .toLowerCase()}`;
