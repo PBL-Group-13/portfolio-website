@@ -7,13 +7,13 @@ import bcrypt from "bcrypt";
 import { Portfolio } from "./Portfolio.js";
 const userSchema = new mongoose.Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: false,
       default: "anonymous",
       trim: true,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: false,
       default: "anonymous",
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: 6,
     },
-    birthdate: {
+    birthDate: {
       type: Date,
     },
     location: {
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       required: false,
     },
     description: {
