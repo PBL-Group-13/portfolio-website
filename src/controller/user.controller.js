@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 export const updateUserController = asyncHandler(async (req, res, next) => {
   try {
     const allowedUpdates = [
-      "firstname",
-      "lastname",
+      "firstName",
+      "lastName",
       "email",
       "birthdate",
       "location",

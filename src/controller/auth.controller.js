@@ -9,15 +9,14 @@ export const signUpController = asyncHandler(async (req, res, next) => {
     const {
       email,
       password,
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       birthdate,
       location,
       phoneNumber,
       description,
       slug,
     } = req.body;
-
     const isExistingUser = await User.findOne({ email });
 
     if (isExistingUser) {
@@ -30,8 +29,8 @@ export const signUpController = asyncHandler(async (req, res, next) => {
     const user = await User.create({
       email,
       password,
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       birthdate,
       location,
       phoneNumber,

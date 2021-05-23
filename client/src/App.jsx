@@ -14,8 +14,8 @@ import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
 import { UpdatePortfolio } from "./section/Portfolio/UpdatePortfolio";
 
 const intialViewer = {
-  firstname: null,
-  lastname: null,
+  firstName: null,
+  lastName: null,
   email: null,
   slug: null,
   portfolio: null,
