@@ -62,6 +62,11 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Portfolio",
     },
+    skills: {
+      type: [String],
+      required: false,
+      default: [],
+    },
   },
   {
     toJSON: {

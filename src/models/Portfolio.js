@@ -107,6 +107,16 @@ portfolioSchema.pre("save", async function (next) {
   if (this.isNew) {
     const user = await User.findByIdAndUpdate(this.user, {
       portfolio: this._id,
+      skills: this.skills,
+    });
+    if (!user) {
+      throw new Error("Something went wrong!");
+    }
+  }
+
+  if (this.isModified("skills")) {
+    const user = await User.findByIdAndUpdate(this.user, {
+      skills: this.skills,
     });
     if (!user) {
       throw new Error("Something went wrong!");

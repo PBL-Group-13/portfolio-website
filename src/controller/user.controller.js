@@ -86,3 +86,19 @@ export const whoController = asyncHandler(async (req, res) => {
     res.type("application/json").send({ status: "success", data: null });
   }
 });
+export const userSearchController = asyncHandler(async (req, res, next) => {
+  const { limit = 5, page = 1, q } = req.query;
+
+  const userSearch =
+    q?.length > 1
+      ? await User.find({
+          $or: [
+            { firstName: new RegExp(q, "gi") },
+            { lastName: new RegExp(q, "gi") },
+            { skills: new RegExp(q, "gi") },
+          ],
+        }).limit(Math.max(1, limit))
+      : [];
+
+  res.type("application/json").send({ status: "success", data: userSearch });
+});
