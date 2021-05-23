@@ -12,10 +12,12 @@ import { useFetch } from "./lib/hooks";
 import { CreatePortfolio } from "./section/Portfolio/index";
 import { PrivateRoute } from "./lib/components/PrivateRoute";
 import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
+import { UpdatePortfolio } from "./section/Portfolio/UpdatePortfolio";
+import { LoadingSpinner } from "./lib/components/LoadingSpinner";
 
-const intialViewer = {
-  firstname: null,
-  lastname: null,
+const initialViewer = {
+  firstName: null,
+  lastName: null,
   email: null,
   slug: null,
   portfolio: null,
@@ -24,14 +26,13 @@ const intialViewer = {
 };
 
 const App = () => {
-  const [viewer, setViewer] = React.useState(intialViewer);
-
-  const [_who, _] = useFetch({
+  const [viewer, setViewer] = React.useState(initialViewer);
+  const [_who, { loading }] = useFetch({
     onSuccess: (data) => {
       setViewer({ ...data, didRequest: true });
     },
     onError: () => {
-      setViewer({ ...intialViewer, didRequest: true });
+      setViewer({ ...initialViewer, didRequest: true });
     },
   });
   const who = React.useRef(_who);
@@ -39,15 +40,16 @@ const App = () => {
   React.useEffect(() => {
     who.current({ url: "/who", method: "get" });
   }, []);
-
-  console.log({ viewer });
+  if (!viewer.didRequest) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <BrowserRouter>
       <Navbar
         transparent
         viewer={viewer}
-        setViewer={() => setViewer({ ...intialViewer, didRequest: true })}
+        setViewer={() => setViewer({ ...initialViewer, didRequest: true })}
       />
       <ToastContainer
         position="top-center"
@@ -63,6 +65,9 @@ const App = () => {
       <main className="bg-gray-900 pt-12 min-h-screen max-h-screen ">
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/404" exact>
+            <h1 className="text-6xl text-white">Not found</h1>
+          </Route>
           <Route path="/signin" exact>
             <Login
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
@@ -85,17 +90,20 @@ const App = () => {
             viewer={viewer}
             component={CreatePortfolio}
           />
-          <Route
-            path="/portfolio/:id"
+          <PrivateRoute
+            path="/me"
+            component={UpdatePortfolio}
             exact
-            component={(props) => (
-              <ViewPortfolio {...props} baseUrl="portfolio" />
-            )}
+            viewer={viewer}
           />
           <Route
-            path="/portfolio/:id/*"
+            path="/portfolios/:id/:path?"
             component={(props) => (
-              <ViewPortfolio {...props} baseUrl="portfolio" />
+              <ViewPortfolio
+                {...props}
+                baseUrl="portfolios"
+                id={props.match.params.id}
+              />
             )}
           />
         </Switch>

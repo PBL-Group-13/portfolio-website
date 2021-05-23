@@ -6,8 +6,8 @@ import { useFetch } from "../../lib/hooks";
 
 export default function SignUp(props) {
   const [formData, setformData] = React.useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     location: "",
@@ -75,11 +75,11 @@ export default function SignUp(props) {
                         <input
                           id="firstName"
                           name="firstName"
-                          value={formData.firstname}
+                          value={formData.firstName}
                           onChange={(e) =>
                             setformData((prev) => ({
                               ...prev,
-                              firstname: e.target.value,
+                              firstName: e.target.value,
                             }))
                           }
                           type="text"
@@ -99,11 +99,11 @@ export default function SignUp(props) {
                           id="lastName"
                           name="lastName"
                           type="text"
-                          value={formData.lastname}
+                          value={formData.lastName}
                           onChange={(e) =>
                             setformData((prev) => ({
                               ...prev,
-                              lastname: e.target.value,
+                              lastName: e.target.value,
                             }))
                           }
                           className="px-3 py-3 placeholder-gray-400 text-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full focus:ring-2 focus:ring-gray-400"

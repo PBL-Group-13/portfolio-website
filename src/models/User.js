@@ -7,16 +7,21 @@ import bcrypt from "bcrypt";
 import { Portfolio } from "./Portfolio.js";
 const userSchema = new mongoose.Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: false,
       default: "anonymous",
       trim: true,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: false,
       default: "anonymous",
+      trim: true,
+    },
+    avatar: {
+      type: String,
+      required: false,
       trim: true,
     },
     email: {
@@ -32,7 +37,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: 6,
     },
-    birthdate: {
+    birthDate: {
       type: Date,
     },
     location: {
@@ -40,7 +45,7 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       required: false,
     },
     description: {
@@ -50,10 +55,17 @@ const userSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
+      lowercase: true,
+      unique: true,
     },
     portfolio: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Portfolio",
+    },
+    skills: {
+      type: [String],
+      required: false,
+      default: [],
     },
   },
   {
@@ -116,7 +128,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.pre("validate", function (next) {
   if (!this.slug) {
-    this.slug = `${this.firstname}-${this.lastname}-${crypto
+    this.slug = `${this.firstName}-${this.lastName}-${crypto
       .randomBytes(8)
       .toString("hex")
       .toLowerCase()}`;

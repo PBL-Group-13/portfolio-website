@@ -7,6 +7,7 @@ import {
   updateUserController,
   signOutController,
   whoController,
+  userSearchController,
 } from "../controller/index.js";
 const router = new Router();
 
@@ -18,6 +19,7 @@ router.post("/signout", signOutController);
 
 router.get("/who", whoController);
 // user routes
+router.get("/search", userSearchController);
 router.patch("/users/:id", userAuthentication, updateUserController);
 router.delete("/users/:id", userAuthentication, deleteUserController);
 

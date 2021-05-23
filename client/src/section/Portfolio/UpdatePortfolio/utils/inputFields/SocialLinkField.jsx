@@ -1,4 +1,4 @@
-import React from "react";
+import Reac from "react";
 const SocialLinkField = (props) => {
   const { socialLink, formData, setFormData } = props;
   const handleChange = (e) => {
