@@ -5,7 +5,7 @@ const ComplexInputField = (props) => {
     const tempUpdate = toUpdate;
     const name = e.target.name;
     isDuration
-      ? (tempUpdate[field][id].duration[name] = e.target.value)
+      ? (tempUpdate[field][id].duration[name] = e.target.value.split("T")[0])
       : (tempUpdate[field][id][name] = e.target.value);
     setFormData({ ...tempUpdate });
   };
@@ -37,7 +37,7 @@ const ComplexInputField = (props) => {
           className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           type="date"
           required
-          value={toUpdate[field][id].duration.start}
+          value={toUpdate[field][id].duration.start.split("T")[0]}
           onChange={(e) => {
             handleChange(e, true);
           }}
@@ -46,7 +46,11 @@ const ComplexInputField = (props) => {
         <input
           className="px-3 py-3 placeholder-gray-500 text-gray-300 bg-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full mt-2"
           type="date"
-          value={toUpdate[field][id].duration.end}
+          value={
+            toUpdate[field][id].duration.end
+              ? toUpdate[field][id].duration.end.split("T")[0]
+              : ""
+          }
           onChange={(e) => {
             handleChange(e, true);
           }}

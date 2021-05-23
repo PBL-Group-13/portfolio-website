@@ -30,7 +30,6 @@ const UpdatePortfolio = (props) => {
   });
   const [getPortfolio, getStatus] = useFetch({
     onError: (e) => {
-      console.log("here");
       if (e instanceof Array) {
         e.forEach((e) => {
           toast.error(e.message || "Something Went Wrong", {});
@@ -50,22 +49,22 @@ const UpdatePortfolio = (props) => {
     },
   });
   useEffect(() => {
-    console.log(props);
-    console.log("loaded");
     getPortfolio({
       url: "/portfolios/me",
       method: "get",
     });
   }, []);
   const handleClick = (e) => {
+    e.preventDefault();
     const name = e.target.name;
     if (counter[name] < 5) {
       setCounter({ ...counter, [name]: counter[name] + 1 });
       const tempFormData = formData;
-      tempFormData[name].push(inputControl[name]);
+      tempFormData[name].push(inputControl[name]());
     }
   };
   const handleRemove = (e) => {
+    e.preventDefault();
     const name = e.target.name;
     if (counter[name] > 0) {
       setCounter({ ...counter, [name]: counter[name] - 1 });

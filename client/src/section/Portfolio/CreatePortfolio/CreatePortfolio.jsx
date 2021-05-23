@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFetch } from "../../../lib/hooks";
@@ -13,9 +13,16 @@ import {
 } from "./utils";
 const CreatePortfolio = (props) => {
   const [counter, setCounter] = React.useState(initCounters);
-
   const history = useHistory();
   const [formData, setFormData] = React.useState(initPortfolioSchema);
+  // const [formError, setFormError] = useState({
+  //   about: false,
+  //   education: [],
+  //   experience: [],
+  //   projects: [],
+  //   skills: [],
+  //   slug: false,
+  // });
   const [createPortfolio, { data, loading, errors }] = useFetch({
     onError: (e) => {
       if (e instanceof Array) {
@@ -31,19 +38,24 @@ const CreatePortfolio = (props) => {
     },
   });
   const handleRemove = (e) => {
+    e.preventDefault();
     const name = e.target.name;
     if (counter[name] > 0) {
       setCounter({ ...counter, [name]: counter[name] - 1 });
       const tempFormData = formData;
       tempFormData[name].pop();
+      setFormData({ ...tempFormData });
     }
   };
   const handleClick = (e) => {
+    e.preventDefault();
     const name = e.target.name;
     if (counter[name] < 5) {
       setCounter({ ...counter, [name]: counter[name] + 1 });
       const tempFormData = formData;
-      tempFormData[name].push(inputControl[name]);
+
+      tempFormData[name].push(inputControl[name]());
+      setFormData({ ...tempFormData });
     }
   };
   const handleChange = (e) => {
@@ -58,7 +70,6 @@ const CreatePortfolio = (props) => {
       data: formData,
       method: "post",
     });
-    console.log(data);
   };
   return (
     <div className="max-w-xl mx-auto">

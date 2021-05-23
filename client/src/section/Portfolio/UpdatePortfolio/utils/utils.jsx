@@ -15,10 +15,10 @@ const projectUnit = () => ({
   link: "",
 });
 const inputControl = {
-  experience: complexUnit(),
-  projects: projectUnit(),
-  education: complexUnit(),
-  skills: "",
+  experience: () => Object.assign({}, complexUnit()),
+  projects: () => Object.assign({}, projectUnit()),
+  education: () => Object.assign({}, complexUnit()),
+  skills: () => "",
 };
 const initPortfolioSchema = {
   socialLinks: {
