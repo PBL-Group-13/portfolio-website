@@ -12,8 +12,9 @@ import { CreatePortfolio } from "./section/Portfolio/index";
 import { PrivateRoute } from "./lib/components/PrivateRoute";
 import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
 import { UpdatePortfolio } from "./section/Portfolio/UpdatePortfolio";
+import { LoadingSpinner } from "./lib/components/LoadingSpinner";
 
-const intialViewer = {
+const initialViewer = {
   firstName: null,
   lastName: null,
   email: null,
@@ -24,13 +25,13 @@ const intialViewer = {
 };
 
 const App = () => {
-  const [viewer, setViewer] = React.useState(intialViewer);
+  const [viewer, setViewer] = React.useState(initialViewer);
   const [_who, { loading }] = useFetch({
     onSuccess: (data) => {
       setViewer({ ...data, didRequest: true });
     },
     onError: () => {
-      setViewer({ ...intialViewer, didRequest: true });
+      setViewer({ ...initialViewer, didRequest: true });
     },
   });
   const who = React.useRef(_who);
@@ -38,8 +39,8 @@ const App = () => {
   React.useEffect(() => {
     who.current({ url: "/who", method: "get" });
   }, []);
-  if (loading) {
-    return <h1>Loading....</h1>;
+  if (!viewer.didRequest) {
+    return <LoadingSpinner />;
   }
 
   return (
@@ -47,7 +48,7 @@ const App = () => {
       <Navbar
         transparent
         viewer={viewer}
-        setViewer={() => setViewer({ ...intialViewer, didRequest: true })}
+        setViewer={() => setViewer({ ...initialViewer, didRequest: true })}
       />
       <ToastContainer
         position="top-center"
@@ -63,6 +64,9 @@ const App = () => {
       <main className="bg-gray-900 pt-12 min-h-screen">
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/404" exact>
+            <h1 className="text-6xl text-white">Not found</h1>
+          </Route>
           <Route path="/signin" exact>
             <Login
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
@@ -86,16 +90,13 @@ const App = () => {
             viewer={viewer}
           />
           <Route
-            path="/portfolio/:id"
-            exact
+            path="/portfolios/:id/:path?"
             component={(props) => (
-              <ViewPortfolio {...props} baseUrl="portfolio" />
-            )}
-          />
-          <Route
-            path="/portfolio/:id/*"
-            component={(props) => (
-              <ViewPortfolio {...props} baseUrl="portfolio" />
+              <ViewPortfolio
+                {...props}
+                baseUrl="portfolios"
+                id={props.match.params.id}
+              />
             )}
           />
         </Switch>

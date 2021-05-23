@@ -48,7 +48,7 @@ export const getPortfolioBySlugController = asyncHandler(
           });
         return;
       }
-      res.type("application/json").send({ portfolio });
+      res.type("application/json").send({ status: "success", data: portfolio });
     } catch (e) {
       next(e);
     }
