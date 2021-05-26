@@ -34,7 +34,7 @@ export default function SignUp(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     signUp({
-      url: "/signup",
+      url: "/api/signup",
       method: "post",
       data: formData,
     });

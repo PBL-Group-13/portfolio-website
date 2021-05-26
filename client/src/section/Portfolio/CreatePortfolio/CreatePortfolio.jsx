@@ -66,7 +66,7 @@ const CreatePortfolio = (props) => {
     e.preventDefault();
     console.log(formData);
     createPortfolio({
-      url: "/portfolios",
+      url: "/api/portfolios",
       data: formData,
       method: "post",
     });

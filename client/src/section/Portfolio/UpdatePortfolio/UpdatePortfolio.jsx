@@ -50,7 +50,7 @@ const UpdatePortfolio = (props) => {
   });
   useEffect(() => {
     getPortfolio({
-      url: "/portfolios/me",
+      url: "/api/portfolios/me",
       method: "get",
     });
   }, []);
@@ -82,7 +82,7 @@ const UpdatePortfolio = (props) => {
       toast.error("No Data Change Detected");
     } else {
       updatePortfolio({
-        url: `/portfolios/${props.viewer.portfolio}`,
+        url: `/api/portfolios/${props.viewer.portfolio}`,
         method: "patch",
         data: {
           socialLinks: formData.socialLinks,

@@ -124,7 +124,7 @@ const ViewPortfolio = (props) => {
 
   useEffect(() => {
     getPortfolio.current({
-      url: `/portfolios/${props.id}`,
+      url: `/api/portfolios/${props.id}`,
       method: "get",
     });
   }, [props.id]);

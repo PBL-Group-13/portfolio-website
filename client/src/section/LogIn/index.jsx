@@ -50,7 +50,7 @@ export default function Login(props) {
                     signin({
                       data: formData,
                       method: "post",
-                      url: "/signin",
+                      url: "/api/signin",
                     });
                   }}
                 >

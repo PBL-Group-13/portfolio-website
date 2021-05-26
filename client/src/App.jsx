@@ -37,7 +37,7 @@ const App = () => {
   const who = React.useRef(_who);
 
   React.useEffect(() => {
-    who.current({ url: "/who", method: "get" });
+    who.current({ url: "/api/who", method: "get" });
   }, []);
   if (!viewer.didRequest) {
     return <LoadingSpinner />;

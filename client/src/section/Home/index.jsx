@@ -53,7 +53,7 @@ const Home = () => {
   useEffect(() => {
     if (searchQuery?.length) {
       searchUser.current({
-        url: `/search?q=${searchQuery || ""}&limit=20`,
+        url: `api/search?q=${searchQuery || ""}&limit=20`,
         method: "get",
       });
     }

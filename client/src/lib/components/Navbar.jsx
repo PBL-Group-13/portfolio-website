@@ -160,7 +160,7 @@ export default function Navbar(props) {
                       type="button"
                       style={{ transition: "all .15s ease" }}
                       onClick={() =>
-                        signout({ method: "post", url: "/signout" })
+                        signout({ method: "post", url: "/api/signout" })
                       }
                     >
                       Sign Out
