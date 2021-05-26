@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "seed:import": "env-cmd -f .env node src/db/seed.js --import",
     "seed:delete": "env-cmd -f .env node src/db/seed.js --delete",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-prebuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
