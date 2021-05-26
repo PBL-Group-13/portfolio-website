@@ -76,7 +76,7 @@ const getProjects = () => {
     data.push(
       new Project({
         name: faker.company.catchPhrase(),
-        coverImage: faker.image.abstract(),
+        coverImage: `${faker.image.abstract()}?q=${i}`,
         description: faker.lorem.paragraphs(randomNo(3) + 1),
         link: "https://google.com",
       })
@@ -109,7 +109,11 @@ const getData = () => {
       new Date("01-01-2001")
     ),
     description: faker.lorem.paragraphs(),
-    email: faker.internet.email(),
+    email: faker.internet.email(
+      firstName,
+      lastName,
+      faker.internet.domainName()
+    ),
     location: faker.address.city(),
     phoneNumber: faker.phone.phoneNumber(),
     portfolio: portFolioId,

@@ -1,8 +1,18 @@
 import mongoose from "mongoose";
 
+const mongoUrl =
+  "mongodb+srv://<username>:<password>@nodejsproject.sxa2b.gcp.mongodb.net/portfolio?retryWrites=true&w=majority";
+
 const connectDB = async () => {
+  const username = process.env.MONGO_USERNAME;
+  const password = process.env.MONGO_PASSWORD;
   try {
-    await mongoose.connect(process.env.MONGODB_URL, {
+    if (!username || !password)
+      throw new Error("MONGO_USERNAME or MONGO_PASSWORD is not defined!");
+    const dbUrl = mongoUrl
+      .replace("<username>", username)
+      .replace("<password>", password);
+    await mongoose.connect(dbUrl, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
