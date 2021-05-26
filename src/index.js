@@ -11,5 +11,6 @@ const port = process.env.PORT || 9000;
     });
   } catch (error) {
     console.log(`[server] : Error`);
+    process.exit();
   }
 })();
