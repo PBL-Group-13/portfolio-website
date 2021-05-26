@@ -76,7 +76,9 @@ const getProjects = () => {
     data.push(
       new Project({
         name: faker.company.catchPhrase(),
-        coverImage: `${faker.image.abstract()}?q=${i}`,
+        coverImage: `${faker.image.abstract()}?q=${randomBytes(5).toString(
+          "hex"
+        )}`,
         description: faker.lorem.paragraphs(randomNo(3) + 1),
         link: "https://google.com",
       })
