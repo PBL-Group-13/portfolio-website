@@ -93,6 +93,7 @@ const portfolioSchema = new mongoose.Schema(
     },
   },
   {
+    timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
         ret.id = doc._id;

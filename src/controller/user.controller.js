@@ -102,3 +102,13 @@ export const userSearchController = asyncHandler(async (req, res, next) => {
 
   res.type("application/json").send({ status: "success", data: userSearch });
 });
+export const getLatestUsersController = asyncHandler(async (req, res) => {
+  const { limit = 21, page = 1 } = req.query;
+  const skip = (Math.max(1, page) - 1) * limit;
+  const userSearch = await User.find({ portfolio: { $ne: null } })
+    .limit(Math.max(1, limit))
+    .skip(skip)
+    .sort({ createdAt: -1 });
+
+  res.type("application/json").send({ status: "success", data: userSearch });
+});

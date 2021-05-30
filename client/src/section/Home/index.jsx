@@ -41,6 +41,7 @@ const Home = () => {
   const history = useHistory();
 
   const [_searchUser, { data, loading, errors }] = useFetch({});
+  const getUsers = useRef(_searchUser);
   const searchUser = useRef(debounce(_searchUser, 500));
   const searchQuery = new URLSearchParams(window.location.search).get("search");
   const handleChange = (event) => {
@@ -53,43 +54,57 @@ const Home = () => {
   useEffect(() => {
     if (searchQuery?.length) {
       searchUser.current({
-        url: `api/search?q=${searchQuery || ""}&limit=20`,
+        url: `api/search?q=${searchQuery || ""}&limit=21`,
         method: "get",
       });
     }
   }, [searchQuery]);
+  useEffect(() => {
+    getUsers.current({
+      url: `api/users/latest`,
+      method: "get",
+    });
+  }, []);
 
   return (
     <div className="border-b-2 border-gray-700">
-      <div className="flex justify-center items-center py-12 my-12 max-w-md mx-auto ">
-        <input
-          type="text"
-          name="search"
-          id="search"
-          value={searchQuery}
-          placeholder="Search..."
-          className="px-3 py-3 placeholder-gray-400 text-gray-700 text-sm shadow focus:outline-none focus:shadow-outline w-full focus:ring-2 focus:ring-gray-400"
-          onChange={handleChange}
-        />
-        <button className="py-3 px-8 bg-blue-400 hover:bg-blue-500 text-sm shadow focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-gray-400">
-          <i className="fas fa-search text-lg text-blue-900"></i>
-        </button>
-      </div>
-      <div className="">{loading && <LoadingSpinner />}</div>
       <div className="">
-        {!data?.length && !loading && searchQuery?.length && (
-          <h1 className="text-white text-center text-xl">No User Found</h1>
-        )}
-      </div>
+        <h1 className="text-center text-7xl text-white mt-16 mb-8">
+          Make My Portfolio
+        </h1>
+        <h2 className="text-center text-3xl text-white opacity-80 mb-16">
+          Create | Connect | Share
+        </h2>
+        <div className="flex justify-center items-center max-w-md mx-auto pb-16 mb-16">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={searchQuery}
+            placeholder="Search By Skills Names ..."
+            className="px-3 py-3 placeholder-gray-400 text-gray-700 text-sm shadow focus:outline-none focus:shadow-outline w-full focus:ring-2 focus:ring-gray-400"
+            onChange={handleChange}
+          />
+          <button className="py-3 px-8 bg-blue-400 hover:bg-blue-500 text-sm shadow focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-gray-400">
+            <i className="fas fa-search text-lg text-blue-900"></i>
+          </button>
+        </div>
+        <div className="">{loading && <LoadingSpinner />}</div>
+        <div className="">
+          {!data?.length && !loading && searchQuery?.length && (
+            <h1 className="text-white text-center text-xl">No User Found</h1>
+          )}
+        </div>
 
-      <div className="result bg-gray-900 max-w-5xl mx-auto">
-        {data?.length && (
-          <div className="flex flex-wrap -mx-2 overflow-hidden ">
-            {data?.map((user, i) => {
-              return <UserSearch user={user} key={i} />;
-            })}
-          </div>
-        )}
+        <div className="result bg-gray-900 max-w-5xl mx-auto">
+          {data?.length && (
+            <div className="flex flex-wrap -mx-2 overflow-hidden ">
+              {data?.map((user, i) => {
+                return <UserSearch user={user} key={i} />;
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
