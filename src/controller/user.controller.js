@@ -8,7 +8,7 @@ export const updateUserController = asyncHandler(async (req, res, next) => {
       "firstName",
       "lastName",
       "email",
-      "birthdate",
+      "birthDate",
       "location",
       "phoneNumber",
       "description",

@@ -11,11 +11,12 @@ export const signUpController = asyncHandler(async (req, res, next) => {
       password,
       firstName,
       lastName,
-      birthdate,
+      birthDate,
       location,
       phoneNumber,
       description,
       slug,
+      avatar,
     } = req.body;
     const isExistingUser = await User.findOne({ email });
 
@@ -31,13 +32,15 @@ export const signUpController = asyncHandler(async (req, res, next) => {
       password,
       firstName,
       lastName,
-      birthdate,
+      birthDate,
       location,
       phoneNumber,
       description,
       slug,
       avatar:
-        "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png",
+        avatar === ""
+          ? "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png"
+          : avatar,
     });
 
     const token = user.generateAuthToken();
