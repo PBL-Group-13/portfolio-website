@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const mongoUrl =
-  "mongodb+srv://<username>:<password>@nodejsproject.sxa2b.gcp.mongodb.net/portfolio?retryWrites=true&w=majority";
+  process.env.NODE_ENV === "development"
+    ? "mongodb://localhost:27017/portfolio"
+    : "mongodb+srv://<username>:<password>@nodejsproject.sxa2b.gcp.mongodb.net/portfolio?retryWrites=true&w=majority";
 
 const connectDB = async () => {
   const username = process.env.MONGO_USERNAME;
