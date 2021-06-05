@@ -153,6 +153,21 @@ export default function Navbar(props) {
                     <button
                       className={
                         (props.transparent
+                          ? "bg-gray-600 text-white active:bg-gray-100"
+                          : "bg-pink-500 text-white active:bg-pink-600") +
+                        " text-xs  px-4 py-2 rounded shadow hover:bg-gray-500 hover:text-white outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
+                      }
+                      type="button"
+                      style={{ transition: "all .15s ease" }}
+                      onClick={() => history.push("/mycontacts")}
+                    >
+                      My Contacts
+                    </button>
+                  </li>
+                  <li className="flex items-center">
+                    <button
+                      className={
+                        (props.transparent
                           ? "text-gray-300 bg-gray-800 active:bg-gray-100"
                           : "bg-pink-500 text-white active:bg-pink-600") +
                         " text-xs  px-4 py-2 rounded shadow hover:bg-gray-500 hover:text-white outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"

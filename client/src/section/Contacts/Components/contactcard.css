@@ -1,0 +1,22 @@
+.contact-card {
+  width: 90%;
+  min-width: 500px;
+  max-width: 1000px;
+  padding: 1em;
+  border-radius: 10px;
+}
+.contact-card:hover {
+  box-shadow: wheat 0 0 5px;
+}
+.upper-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upper-card h3 {
+  font-size: 1.25rem;
+}
+
+.message {
+  margin: auto;
+}
