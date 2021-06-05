@@ -107,7 +107,6 @@ const initData = {
 };
 
 const ViewPortfolio = (props) => {
-  console.log(props);
   const { pathname: loc } = useLocation();
   const history = useHistory();
   const pathname = `/${props.baseUrl}/${props.id}`;
@@ -240,7 +239,7 @@ const ViewPortfolio = (props) => {
                 <Projects projects={data.projects} />
               </Route>
               <Route path={`${pathname}/contact`} exact>
-                <Contact />
+                <Contact email={data.user.email} />
               </Route>
             </Switch>
           </div>

@@ -13,6 +13,7 @@ import { PrivateRoute } from "./lib/components/PrivateRoute";
 import { ViewPortfolio } from "./section/Portfolio/ViewPortfolio";
 import { UpdatePortfolio } from "./section/Portfolio/UpdatePortfolio";
 import { LoadingSpinner } from "./lib/components/LoadingSpinner";
+import { MyContacts } from "./section/Contacts";
 
 const initialViewer = {
   firstName: null,
@@ -74,6 +75,11 @@ const App = () => {
           </Route>
           <Route path="/signup" exact>
             <SignUp
+              setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
+            />
+          </Route>
+          <Route path="/mycontacts" exact>
+            <MyContacts
               setViewer={(viewer) => setViewer({ ...viewer, didRequest: true })}
             />
           </Route>
