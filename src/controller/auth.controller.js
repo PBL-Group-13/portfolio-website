@@ -36,6 +36,8 @@ export const signUpController = asyncHandler(async (req, res, next) => {
       phoneNumber,
       description,
       slug,
+      avatar:
+        "https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png",
     });
 
     const token = user.generateAuthToken();
