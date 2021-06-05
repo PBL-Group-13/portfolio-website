@@ -12,7 +12,8 @@ export default function SignUp(props) {
     password: "",
     location: "",
     phoneNumber: "",
-    birthdate: "",
+    birthDate: "",
+    avatar: "",
   });
 
   const history = useHistory();
@@ -33,6 +34,7 @@ export default function SignUp(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     signUp({
       url: "/api/signup",
       method: "post",
@@ -136,7 +138,29 @@ export default function SignUp(props) {
                           style={{ transition: "all .15s ease" }}
                         />
                       </div>
-
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                          htmlFor="avatar"
+                        >
+                          Avatar
+                        </label>
+                        <input
+                          id="avatar"
+                          name="avatar"
+                          value={formData.avatar}
+                          onChange={(e) =>
+                            setformData((prev) => ({
+                              ...prev,
+                              avatar: e.target.value,
+                            }))
+                          }
+                          type="url"
+                          className="px-3 py-3 placeholder-gray-400 text-gray-700 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full focus:ring-2 focus:ring-gray-400"
+                          placeholder="Link to Your Avatar"
+                          style={{ transition: "all .15s ease" }}
+                        />
+                      </div>
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -225,12 +249,12 @@ export default function SignUp(props) {
                         <input
                           type="date"
                           id="birthdate"
-                          name="birthdate"
-                          value={formData.birthdate}
+                          name="birthDate"
+                          value={formData.birthDate.split("T")[0]}
                           onChange={(e) =>
                             setformData((prev) => ({
                               ...prev,
-                              birthdate: e.target.value,
+                              birthDate: e.target.value.split("T")[0],
                             }))
                           }
                           className="px-3 py-3 placeholder-gray-200 text-gray-400 rounded text-sm shadow focus:outline-none focus:shadow-outline w-full focus:ring-2 focus:ring-gray-400 focus:text-gray-700"
