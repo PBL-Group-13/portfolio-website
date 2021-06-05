@@ -28,7 +28,7 @@ const MyContacts = () => {
     return <>Loading</>;
   } else {
     return (
-      <div className="max-w-7xl flex flex-col items-center h-auto lg:h-screen  mx-auto my-32  lg:my-4 bg-gray-800 ">
+      <div className="max-w-7xl flex flex-col items-center h-auto mx-auto py-32  lg:my-4 bg-gray-800 ">
         <div className="my-5 items-center content-start block">
           <h1 className="text-4xl font-bold text-gray-300 tracking-tight mb-8 text-left flex-left ">
             My Contacts
