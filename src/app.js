@@ -7,7 +7,7 @@ import { PortfolioRouter, UploadRouter, UserRouter } from "./routes/index.js";
 import compression from "compression";
 
 const app = express();
-
+const staticPath = path.join(process.cwd(), "client", "build");
 app.use(compression());
 app.set("trust proxy", 1);
 app.use(morgan("dev"));
@@ -17,11 +17,12 @@ app.use(express.json());
 app.use("/api/", UserRouter);
 app.use("/api/", UploadRouter);
 app.use("/api/portfolios", PortfolioRouter);
-console.log(path.join(process.cwd(), "client", "build"));
-app.get(
-  "/*",
-  express.static(path.join(path.join(process.cwd(), "client", "build")))
-);
+
+app.use(express.static(staticPath));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(staticPath, "index.html"));
+});
+
 app.use(errorHandler);
 
 export { app };
