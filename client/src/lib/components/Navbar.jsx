@@ -97,14 +97,14 @@ export default function Navbar(props) {
               </li>
 
               <li className="flex items-center">
-                <Link
+                <a
                   className={
                     (props.transparent
                       ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
                       : "text-gray-800 hover:text-gray-600") +
                     " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   }
-                  to="#pablo"
+                  href="https://github.com/PBL-Group-13/portfolio-website"
                 >
                   <i
                     className={
@@ -115,7 +115,7 @@ export default function Navbar(props) {
                     }
                   />
                   <span className="lg:hidden inline-block ml-2">Star</span>
-                </Link>
+                </a>
               </li>
               {props.viewer?.id ? (
                 <>
